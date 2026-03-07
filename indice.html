@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propuesta Comercial · Cristina Montaner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #10B981;
+            --light-green: #6EE7B7;
+            --soft-gray: #9CA3AF;
+            --neutral-800: #374151;
+            --neutral-600: #4B5563;
+            --gradient-bg: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 50%, #E5E7EB 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--gradient-bg);
+            min-height: 100vh;
+            color: var(--neutral-800);
+        }
+
+        /* ── NAVBAR ── */
+        .navbar {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(16,185,129,0.12);
+            position: sticky; top: 0; z-index: 100;
+        }
+        .navbar-content {
+            max-width: 1100px; margin: 0 auto;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem; font-weight: 700;
+            color: var(--primary-green);
+        }
+        .nav-meta {
+            font-size: 0.78rem; color: var(--soft-gray);
+            letter-spacing: 0.04em;
+        }
+
+        /* ── HERO ── */
+        .hero {
+            max-width: 1100px; margin: 0 auto;
+            padding: 3.5rem 2rem 2.5rem;
+            text-align: center;
+            animation: fadeUp 0.8s ease both;
+        }
+        .hero-eyebrow {
+            font-size: 0.72rem; font-weight: 600;
+            letter-spacing: 0.18em; text-transform: uppercase;
+            color: var(--primary-green);
+            display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+            margin-bottom: 1rem;
+        }
+        .hero-eyebrow::before,
+        .hero-eyebrow::after { content: ''; width: 30px; height: 1px; background: var(--primary-green); opacity: 0.5; }
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem; font-weight: 700;
+            color: var(--neutral-800);
+            margin-bottom: 0.75rem;
+            line-height: 1.15;
+        }
+        .hero-sub {
+            font-size: 1rem; color: var(--soft-gray);
+            max-width: 500px; margin: 0 auto;
+            line-height: 1.65;
+        }
+
+        /* ── CONTENEDOR PRINCIPAL ── */
+        .main {
+            max-width: 1100px; margin: 0 auto;
+            padding: 0 2rem 5rem;
+        }
+
+        /* ── GRID DE CARDS ── */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+            opacity: 0; animation: fadeUp 0.7s ease 0.2s both;
+        }
+
+        /* ── CARD ── */
+        .card {
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            border: 1px solid rgba(16,185,129,0.08);
+            padding: 1.4rem 1.5rem;
+            text-decoration: none;
+            color: inherit;
+            display: flex; align-items: center; gap: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-green), var(--light-green));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(16,185,129,0.25);
+            box-shadow: 0 12px 32px rgba(16,185,129,0.12);
+        }
+        .card:hover::before { opacity: 1; }
+
+        .card-body { flex: 1; min-width: 0; }
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem; font-weight: 600;
+            color: var(--neutral-800);
+            margin-bottom: 0.3rem;
+            line-height: 1.3;
+        }
+        .card-desc {
+            font-size: 0.8rem; color: var(--soft-gray);
+            line-height: 1.55;
+        }
+
+        .card-arrow {
+            font-size: 1rem; color: rgba(16,185,129,0.3);
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+        .card:hover .card-arrow {
+            color: var(--primary-green);
+            transform: translateX(3px);
+        }
+
+        /* ── CTA FINAL ── */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-green) 0%, #059669 100%);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            margin-top: 2rem;
+            position: relative; overflow: hidden;
+        }
+        .cta-section::before {
+            content: '';
+            position: absolute; top: -80px; right: -80px;
+            width: 260px; height: 260px; border-radius: 50%;
+            background: rgba(255,255,255,0.07);
+            pointer-events: none;
+        }
+        .cta-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem; font-weight: 700;
+            color: white; margin-bottom: 0.75rem;
+        }
+        .cta-sub {
+            font-size: 0.95rem; color: rgba(255,255,255,0.85);
+            margin-bottom: 1.75rem;
+            max-width: 460px; margin-left: auto; margin-right: auto;
+            line-height: 1.65;
+        }
+        .cta-contacts {
+            display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+        }
+        .cta-contact-item {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 10px;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.82rem; color: white;
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+
+        /* ── FOOTER ── */
+        .footer {
+            text-align: center; padding: 2rem;
+            color: var(--soft-gray); font-size: 0.8rem;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2rem; }
+            .cards-grid { grid-template-columns: 1fr; }
+            .main { padding: 0 1rem 4rem; }
+            .cta-section { padding: 2rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-content">
+            <div class="logo">Cristina Montaner</div>
+            <div class="nav-meta">Propuesta de Contabilidad Estratégica</div>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="hero-eyebrow">Tu departamento contable en remoto</div>
+        <h1 class="hero-title">Propuesta Comercial</h1>
+        <p class="hero-sub">Navega por cada sección de la propuesta en el orden diseñado para ti.</p>
+    </div>
+
+    <div class="main">
+
+        <div class="cards-grid">
+
+            <a href="ElMejorMomentoesAhora.html" class="card">
+                <div class="card-body">
+                    <div class="card-title">El Mejor Momento es Ahora</div>
+                    <div class="card-desc">Tendencia de mercado y consecuencias de no actuar.</div>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="Antecedentes.html" class="card">
+                <div class="card-body">
+                    <div class="card-title">Antecedentes</div>
+                    <div class="card-desc">Contexto del cliente y cifras de la reunión previa.</div>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="SituaciónActualdelaMayoría.html" class="card">
+                <div class="card-body">
+                    <div class="card-title">La Situación Actual de la Mayoría</div>
+                    <div class="card-desc">Matriz con 3 cuadrantes problemáticos y 1 resultado soñado.</div>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="slide_situacion_beneficios.html" class="card">
+                <div class="card-body">
+                    <div class="card-title">Lo que Vas a Conseguir</div>
+                    <div class="card-desc">Historia aspiracional del antes y después.</div>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="ROI.html" class="card">
+                <div class="card-body">
+                    <div class="card-title">Demostración del ROI</div>
+                    <div class="card-desc">Resultados concretos con números reales de clientes anteriores.</div>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="Método.html" class="card">
+                <div class="card-body">
+                    <div class="card-title">Método</div>
+                    <div class="card-desc">Diagrama visual del enfoque y framework único de trabajo.</div>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="Cronograma.html" class="card">
+                <div class="card-body">
+                    <div class="card-title">Fases y Cronograma</div>
+                    <div class="card-desc">Plazos por semana y quincena. Cuándo verás los primeros resultados.</div>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="ActividadesyEntregables.html" class="card">
+                <div class="card-body">
+                    <div class="card-title">Actividades y Entregables</div>
+                    <div class="card-desc">Objetivo, actividades, entregables y duración por fase.</div>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="Ilustrativos.html" class="card">
+                <div class="card-body">
+                    <div class="card-title">Los Ilustrativos</div>
+                    <div class="card-desc">Ejemplos de outputs reales anonimizados.</div>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="NoPasarás.html" class="card">
+                <div class="card-body">
+                    <div class="card-title">No Pasarás</div>
+                    <div class="card-desc">Hitos de control por fase para generar confianza.</div>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="QuickWin.html" class="card">
+                <div class="card-body">
+                    <div class="card-title">Los Quick Wins</div>
+                    <div class="card-desc">Resultado rápido y tangible en menos de 1 mes.</div>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="EsfuerzodelCliente.html" class="card">
+                <div class="card-body">
+                    <div class="card-title">El Esfuerzo del Cliente</div>
+                    <div class="card-desc">Dedicación requerida por fase y cómo facilito el proceso.</div>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="slide_precio.html" class="card">
+                <div class="card-body">
+                    <div class="card-title">La Inversión</div>
+                    <div class="card-desc">Precio del servicio y condiciones de contratación.</div>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="Porquéyo.html" class="card">
+                <div class="card-body">
+                    <div class="card-title">¿Por Qué Yo?</div>
+                    <div class="card-desc">15 motivos personalizados por tipo de cliente.</div>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="Mihistoria.html" class="card">
+                <div class="card-body">
+                    <div class="card-title">Mi Historia</div>
+                    <div class="card-desc">Cronología profesional y personal.</div>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="Valores.html" class="card">
+                <div class="card-body">
+                    <div class="card-title">Valores y Compromisos</div>
+                    <div class="card-desc">Cada valor con una garantía concreta.</div>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="Especialización.html" class="card">
+                <div class="card-body">
+                    <div class="card-title">Especialización y Logros</div>
+                    <div class="card-desc">Servicios especializados y logros con números.</div>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="Extras.html" class="card">
+                <div class="card-body">
+                    <div class="card-title">Extras</div>
+                    <div class="card-desc">Adicionales que reducen esfuerzo y eliminan objeciones.</div>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="Bonus.html" class="card">
+                <div class="card-body">
+                    <div class="card-title">Bonus</div>
+                    <div class="card-desc">Beneficios adicionales incluidos en la propuesta.</div>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="Garantías.html" class="card">
+                <div class="card-body">
+                    <div class="card-title">Garantías</div>
+                    <div class="card-desc">De acompañamiento, soporte, devolución y cumplimiento.</div>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="slide_precio_bonus.html" class="card">
+                <div class="card-body">
+                    <div class="card-title">Inversión con Extras</div>
+                    <div class="card-desc">Precio final incluyendo todos los bonus y extras.</div>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="FAQS.html" class="card">
+                <div class="card-body">
+                    <div class="card-title">FAQs</div>
+                    <div class="card-desc">Respuesta a las principales objeciones y dudas frecuentes.</div>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="Firma.html" class="card">
+                <div class="card-body">
+                    <div class="card-title">Firma</div>
+                    <div class="card-desc">Apartado para firmar la propuesta y formalizar el acuerdo.</div>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-section">
+            <h2 class="cta-title">¿Tienes alguna pregunta?</h2>
+            <p class="cta-sub">Estoy disponible para resolver cualquier duda antes de que tomes tu decisión.</p>
+            <div class="cta-contacts">
+                <div class="cta-contact-item">✉ cristina.proasistente@gmail.com</div>
+                <div class="cta-contact-item">📱 +34 677 221 810</div>
+                <div class="cta-contact-item">🗓 calendly.com/cristinamontaner</div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="footer">
+        Cristina Montaner · Contabilidad Estratégica en Remoto · 2026
+    </footer>
+
+</body>
+</html>

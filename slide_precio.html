@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu inversión - Cristina Montaner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary-green: #10B981; --light-green: #6EE7B7; --beige: #F5F5DC; --soft-gray: #9CA3AF; --light-pink: #FDF2F8; --neutral-800: #374151; --gradient-bg: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 50%, #E5E7EB 100%); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--gradient-bg); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; color: var(--neutral-800); }
+        .slide-container { max-width: 1200px; width: 100%; background: rgba(255,255,255,0.9); backdrop-filter: blur(20px); border-radius: 24px; border: 1px solid rgba(16,185,129,0.1); padding: 4rem; position: relative; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .slide-container::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--primary-green), var(--light-green)); }
+        .floating-circle { position: absolute; border-radius: 50%; background: rgba(16,185,129,0.05); animation: float 6s ease-in-out infinite; pointer-events: none; }
+        .floating-circle:nth-child(1) { width: 200px; height: 200px; top: 10%; right: -100px; }
+        .floating-circle:nth-child(2) { width: 150px; height: 150px; bottom: 10%; left: -75px; animation-delay: 2s; }
+        @keyframes float { 0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)} }
+
+        .slide-header { text-align: center; margin-bottom: 3rem; animation: fadeInDown 0.8s ease-out; }
+        .slide-title { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700; background: linear-gradient(135deg, var(--neutral-800), var(--soft-gray)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1.1; margin-bottom: 0.75rem; }
+        .slide-subtitle { font-size: 1.1rem; color: var(--soft-gray); font-weight: 300; }
+
+        /* LAYOUT */
+        .layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-bottom: 2.5rem; }
+
+        /* COLUMNA IZQUIERDA — Lo que pagas */
+        .col-left { opacity: 0; transform: translateY(20px); animation: slideUp 0.8s ease-out 0.2s forwards; }
+        .col-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--primary-green); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.6rem; }
+        .col-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, rgba(16,185,129,0.3), transparent); }
+
+        /* Precio principal */
+        .precio-card { background: linear-gradient(135deg, var(--primary-green), var(--light-green)); border-radius: 20px; padding: 2.5rem; text-align: center; margin-bottom: 1.5rem; position: relative; overflow: hidden; }
+        .precio-card::before { content: ''; position: absolute; top: -40px; right: -40px; width: 120px; height: 120px; border-radius: 50%; background: rgba(255,255,255,0.08); }
+        .precio-plan { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 0.75rem; }
+        .precio-num { font-family: 'Playfair Display', serif; font-size: 4.5rem; font-weight: 700; color: white; line-height: 1; }
+        .precio-suffix { font-size: 1rem; color: rgba(255,255,255,0.8); margin-top: 0.25rem; }
+        .precio-vs { background: rgba(255,255,255,0.15); border-radius: 10px; padding: 0.75rem 1rem; margin-top: 1.25rem; font-size: 0.8rem; color: rgba(255,255,255,0.85); line-height: 1.5; font-style: italic; }
+
+        /* Lo que incluye */
+        .incluye-list { display: flex; flex-direction: column; gap: 0.6rem; }
+        .incluye-item { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.75rem 1rem; background: var(--light-pink); border-radius: 10px; border: 1px solid rgba(16,185,129,0.08); }
+        .incluye-check { width: 20px; height: 20px; border-radius: 50%; background: linear-gradient(135deg, var(--primary-green), var(--light-green)); display: flex; align-items: center; justify-content: center; font-size: 0.6rem; color: white; flex-shrink: 0; margin-top: 1px; }
+        .incluye-text { font-size: 0.85rem; color: var(--neutral-800); line-height: 1.45; }
+
+        /* COLUMNA DERECHA — Lo que obtienes */
+        .col-right { opacity: 0; transform: translateY(20px); animation: slideUp 0.8s ease-out 0.4s forwards; }
+
+        /* Comparativa */
+        .comparativa { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem; }
+        .comp-item { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: center; padding: 1rem 1.25rem; background: var(--beige); border-radius: 12px; border: 1px solid rgba(16,185,129,0.15); }
+        .comp-alternativa { font-size: 0.8rem; color: var(--soft-gray); line-height: 1.4; }
+        .comp-precio-alt { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 600; color: #9CA3AF; text-align: center; text-decoration: line-through; }
+        .comp-yo { font-size: 0.8rem; color: var(--primary-green); font-weight: 500; line-height: 1.4; text-align: right; }
+        .comp-divider { width: 1px; height: 100%; background: rgba(16,185,129,0.2); align-self: stretch; }
+
+        /* ROI */
+        .roi-card { background: var(--light-pink); border-radius: 16px; padding: 1.75rem; border: 1px solid rgba(16,185,129,0.1); }
+        .roi-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 600; color: var(--neutral-800); margin-bottom: 1rem; }
+        .roi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+        .roi-item { background: white; border-radius: 10px; padding: 1rem; text-align: center; border: 1px solid rgba(16,185,129,0.1); }
+        .roi-num { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 700; color: var(--primary-green); line-height: 1; margin-bottom: 0.25rem; }
+        .roi-label { font-size: 0.72rem; color: var(--soft-gray); line-height: 1.4; }
+
+        /* CONCLUSIÓN */
+        .conclusion { background: var(--beige); border-radius: 16px; padding: 2rem 3rem; border: 1px solid rgba(16,185,129,0.2); position: relative; text-align: center; animation: fadeInUp 1s ease-out 0.8s both; }
+        .expertise-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--primary-green), var(--light-green)); color: white; padding: 0.5rem 1.5rem; border-radius: 20px; font-size: 0.875rem; font-weight: 600; box-shadow: 0 4px 12px rgba(16,185,129,0.3); white-space: nowrap; }
+        .conclusion-text { font-size: 1rem; color: var(--neutral-800); line-height: 1.7; margin-bottom: 0.5rem; }
+        .conclusion-highlight { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 600; color: var(--primary-green); display: block; }
+
+        @keyframes fadeInDown { from{opacity:0;transform:translateY(-30px)}to{opacity:1;transform:translateY(0)} }
+        @keyframes slideUp { to{opacity:1;transform:translateY(0)} }
+        @keyframes fadeInUp { from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)} }
+        @media(max-width:768px){.slide-container{padding:2rem}.layout{grid-template-columns:1fr}.slide-title{font-size:2rem}}
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="floating-circle"></div>
+        <div class="floating-circle"></div>
+
+        <header class="slide-header">
+            <h1 class="slide-title">Tu inversión</h1>
+            <p class="slide-subtitle">Lo que te cuesta vs. lo que te ahorra</p>
+        </header>
+
+        <div class="layout">
+            <!-- COLUMNA IZQUIERDA -->
+            <div class="col-left">
+                <div class="col-label">El servicio</div>
+                <div class="precio-card">
+                    <div class="precio-plan">Departamento Contable Externalizado</div>
+                    <div class="precio-num">1.500€</div>
+                    <div class="precio-suffix">+ IVA / mes</div>
+                    <div class="precio-vs">Un contable interno equivalente te costaría entre 2.500€ y 3.400€/mes (nómina + costes de empresa). Yo soy tu departamento completo a menos de la mitad.</div>
+                </div>
+
+                <div class="col-label">Qué incluye</div>
+                <div class="incluye-list">
+                    <div class="incluye-item"><div class="incluye-check">✓</div><div class="incluye-text">Contabilidad mensual organizada y al día con analítica</div></div>
+                    <div class="incluye-item"><div class="incluye-check">✓</div><div class="incluye-text">Control de márgenes y rentabilidad por proyecto</div></div>
+                    <div class="incluye-item"><div class="incluye-check">✓</div><div class="incluye-text">Gestión de facturas de venta y compra</div></div>
+                    <div class="incluye-item"><div class="incluye-check">✓</div><div class="incluye-text">Control de cobros, pagos e impagos</div></div>
+                    <div class="incluye-item"><div class="incluye-check">✓</div><div class="incluye-text">Comunicación con clientes y proveedores</div></div>
+                    <div class="incluye-item"><div class="incluye-check">✓</div><div class="incluye-text">Gestión de impuestos y presentaciones</div></div>
+                    <div class="incluye-item"><div class="incluye-check">✓</div><div class="incluye-text">Seguimiento de proyectos y creación de pedidos</div></div>
+                    <div class="incluye-item"><div class="incluye-check">✓</div><div class="incluye-text">Informes mensuales claros y útiles para decidir</div></div>
+                    <div class="incluye-item"><div class="incluye-check">✓</div><div class="incluye-text">Un único punto de contacto para todo</div></div>
+                </div>
+            </div>
+
+            <!-- COLUMNA DERECHA -->
+            <div class="col-right">
+                <div class="col-label">Lo que te cuesta no tenerlo</div>
+                <div class="comparativa">
+                    <div class="comp-item">
+                        <div class="comp-alternativa">Gestoría tradicional<br><span style="font-size:0.72rem;color:#9CA3AF">Solo impuestos, sin analítica</span></div>
+                        <div style="width:1px;background:rgba(16,185,129,0.2);align-self:stretch;margin:0 0.25rem"></div>
+                        <div class="comp-yo">300€/mes + tus horas de finde semana preparando informes</div>
+                    </div>
+                    <div class="comp-item">
+                        <div class="comp-alternativa">Contable interno<br><span style="font-size:0.72rem;color:#9CA3AF">Perfil equivalente</span></div>
+                        <div style="width:1px;background:rgba(16,185,129,0.2);align-self:stretch;margin:0 0.25rem"></div>
+                        <div class="comp-yo">2.500–3.400€/mes + costes fijos aunque no lo necesites todo el año</div>
+                    </div>
+                    <div class="comp-item" style="background:rgba(16,185,129,0.05);border-color:rgba(16,185,129,0.25)">
+                        <div class="comp-alternativa" style="color:var(--neutral-800);font-weight:500">Cristina Montaner<br><span style="font-size:0.72rem;color:var(--primary-green)">Departamento completo</span></div>
+                        <div style="width:1px;background:rgba(16,185,129,0.2);align-self:stretch;margin:0 0.25rem"></div>
+                        <div class="comp-yo" style="font-size:1rem;font-family:'Playfair Display',serif;font-weight:600;color:var(--primary-green)">1.500€ + IVA/mes</div>
+                    </div>
+                </div>
+
+                <div class="col-label">Lo que recuperas</div>
+                <div class="roi-card">
+                    <div class="roi-title">Casos reales de clientes como tú</div>
+                    <div class="roi-grid">
+                        <div class="roi-item">
+                            <div class="roi-num">+€18K</div>
+                            <div class="roi-label">Estudio arquitectura — márgenes por proyecto</div>
+                        </div>
+                        <div class="roi-item">
+                            <div class="roi-num">+€7.2K</div>
+                            <div class="roi-label">Profesional IT — 120h anuales recuperadas</div>
+                        </div>
+                        <div class="roi-item">
+                            <div class="roi-num">€8.4K</div>
+                            <div class="roi-label">Escuela — dejó de perder sin saberlo</div>
+                        </div>
+                        <div class="roi-item">
+                            <div class="roi-num">3–6m</div>
+                            <div class="roi-label">Tiempo medio para recuperar la inversión</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="conclusion">
+            <div class="expertise-badge">La pregunta real</div>
+            <p class="conclusion-text">No es cuánto cuesta este servicio. Es cuánto te está costando seguir sin él.</p>
+            <span class="conclusion-highlight">1.500€/mes es menos de lo que pierdes sin claridad financiera.</span>
+        </div>
+    </div>
+</body>
+</html>

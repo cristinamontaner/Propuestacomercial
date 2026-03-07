@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu Primera Victoria - Resultados en 14 Días</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #10B981;
+            --light-green: #6EE7B7;
+            --beige: #F5F5DC;
+            --soft-gray: #9CA3AF;
+            --light-pink: #FDF2F8;
+            --neutral-800: #374151;
+            --neutral-600: #4B5563;
+            --success-green: #059669;
+            --gradient-bg: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 50%, #E5E7EB 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--gradient-bg);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            color: var(--neutral-800);
+            overflow-x: auto;
+        }
+
+        .slide-container {
+            max-width: 1200px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid rgba(16, 185, 129, 0.1);
+            padding: 4rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .slide-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-green), var(--light-green));
+        }
+
+        .slide-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .slide-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--success-green), var(--primary-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+        }
+
+        .slide-subtitle {
+            font-size: 1.25rem;
+            color: var(--soft-gray);
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        .quick-win-hero {
+            background: linear-gradient(135deg, var(--success-green), var(--primary-green));
+            color: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: slideInUp 1s ease-out 0.3s both;
+        }
+
+        .quick-win-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.3; }
+            50% { transform: scale(1.1) rotate(180deg); opacity: 0.1; }
+        }
+
+        .quick-win-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .quick-win-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            position: relative;
+            line-height: 1.2;
+        }
+
+        .quick-win-description {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .quick-win-timeline {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 1.5rem;
+            border-radius: 15px;
+            display: inline-block;
+            position: relative;
+        }
+
+        .timeline-text {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-detail {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .benefit-card {
+            background: var(--light-pink);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+            animation: slideUpStagger 0.8s ease-out both;
+        }
+
+        .benefit-card:nth-child(1) { animation-delay: 0.6s; }
+        .benefit-card:nth-child(2) { animation-delay: 0.8s; }
+        .benefit-card:nth-child(3) { animation-delay: 1.0s; }
+
+        .benefit-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary-green);
+            box-shadow: 0 15px 40px rgba(16, 185, 129, 0.15);
+        }
+
+        .benefit-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .benefit-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.375rem;
+            font-weight: 600;
+            color: var(--neutral-800);
+            margin-bottom: 1rem;
+        }
+
+        .benefit-description {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: var(--neutral-600);
+        }
+
+        .confidence-section {
+            background: var(--beige);
+            border-radius: 16px;
+            padding: 2.5rem;
+            text-align: center;
+            border-left: 4px solid var(--primary-green);
+            animation: fadeInUp 1s ease-out 1.2s both;
+            position: relative;
+        }
+
+        .confidence-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--success-green), var(--primary-green));
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+        }
+
+        .confidence-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-green);
+            margin-bottom: 1rem;
+        }
+
+        .confidence-text {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--neutral-800);
+            margin-bottom: 1.5rem;
+        }
+
+        .confidence-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.375rem;
+            font-style: italic;
+            color: var(--success-green);
+            font-weight: 500;
+        }
+
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            overflow: hidden;
+            border-radius: 24px;
+        }
+
+        .floating-star {
+            position: absolute;
+            color: rgba(16, 185, 129, 0.1);
+            font-size: 1.5rem;
+            animation: floatStar 8s ease-in-out infinite;
+        }
+
+        .star-1 { top: 15%; right: 10%; animation-delay: 0s; }
+        .star-2 { bottom: 20%; left: 8%; animation-delay: 2s; }
+        .star-3 { top: 50%; right: 5%; animation-delay: 4s; }
+        .star-4 { bottom: 40%; right: 12%; animation-delay: 6s; }
+
+        @keyframes floatStar {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.4; }
+            25% { transform: translateY(-10px) rotate(90deg); opacity: 0.2; }
+            50% { transform: translateY(-5px) rotate(180deg); opacity: 0.6; }
+            75% { transform: translateY(-15px) rotate(270deg); opacity: 0.3; }
+        }
+
+        /* Animaciones */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUpStagger {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .benefits-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .slide-container {
+                padding: 2rem;
+            }
+            
+            .slide-title {
+                font-size: 2.5rem;
+            }
+            
+            .quick-win-title {
+                font-size: 2rem;
+            }
+            
+            .quick-win-hero {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="floating-elements">
+            <div class="floating-star star-1">✨</div>
+            <div class="floating-star star-2">⭐</div>
+            <div class="floating-star star-3">🌟</div>
+            <div class="floating-star star-4">💫</div>
+        </div>
+
+        <header class="slide-header">
+            <h1 class="slide-title">Tu Primera Victoria</h1>
+            <p class="slide-subtitle">Tus primeros Resultados en 14 Días</p>
+        </header>
+
+        <div class="quick-win-hero">
+            <div class="quick-win-badge">Resultado Garantizado</div>
+            <h2 class="quick-win-title">Acceso Real a Tus Propios Números</h2>
+            <p class="quick-win-description">
+                Por primera vez en años, podrás entrar a tu software contable y entender exactamente 
+                qué significan todos los números. Sin tecnicismos, sin confusión.
+            </p>
+            <div class="quick-win-timeline">
+                <div class="timeline-text">📅 En solo 10-14 días</div>
+                <div class="timeline-detail">Desde el primer día de trabajo</div>
+            </div>
+        </div>
+
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="benefit-icon">🔍</div>
+                <h3 class="benefit-title">Claridad Inmediata</h3>
+                <p class="benefit-description">
+                    Ves tus ingresos, gastos y márgenes organizados de forma que los puedes entender sin ser contador.
+                </p>
+            </div>
+
+            <div class="benefit-card">
+                <div class="benefit-icon">⏰</div>
+                <h3 class="benefit-title">Tiempo Liberado</h3>
+                <p class="benefit-description">
+                    Dejas de pasar fines de semana intentando entender hojas de Excel o preparando informes manuales.
+                </p>
+            </div>
+
+            <div class="benefit-card">
+                <div class="benefit-icon">💡</div>
+                <h3 class="benefit-title">Primera Decisión</h3>
+                <p class="benefit-description">
+                    Tomas tu primera decisión financiera basada en datos reales, no en intuición o "sensaciones".
+                </p>
+            </div>
+        </div>
+
+        <div class="confidence-section">
+            <div class="confidence-badge">El Momento "Aha!"</div>
+            <h2 class="confidence-title">Lo que me dicen mis clientes</h2>
+            <p class="confidence-text">
+                Después de años sintiéndose desconectados de sus propios números, en 2 semanas experimentan 
+                el momento "aha!" de finalmente entender su negocio financieramente.
+            </p>
+            <p class="confidence-quote">
+                "Por primera vez en 5 años, entro a mi contabilidad y sé exactamente qué estoy viendo."
+            </p>
+        </div>
+    </div>
+</body>
+</html>

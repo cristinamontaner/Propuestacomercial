@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Empieza hoy – Cristina Montaner</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--g:#10B981;--lg:#6EE7B7;--beige:#F5F5DC;--gray:#9CA3AF;--pink:#FDF2F8;--dark:#374151}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#F9FAFB,#F3F4F6,#E5E7EB);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;color:var(--dark)}
+.wrap{max-width:1100px;width:100%;background:rgba(255,255,255,0.92);border-radius:24px;border:1px solid rgba(16,185,129,0.12);padding:3.5rem;position:relative;overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,0.08)}
+.wrap::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--g),var(--lg))}
+h1{font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:700;color:var(--dark);line-height:1.1;margin-bottom:.5rem;text-align:center}
+.sub{text-align:center;font-size:1rem;color:var(--gray);margin-bottom:2.5rem}
+
+/* COMPROMISO */
+.compromiso{background:linear-gradient(135deg,var(--g),var(--lg));border-radius:14px;padding:1.75rem 2.5rem;margin-bottom:2.5rem;text-align:center}
+.compromiso p{font-size:.93rem;color:rgba(255,255,255,0.93);font-style:italic;line-height:1.7}
+
+/* DOS COLUMNAS */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;margin-bottom:2rem}
+
+.col-label{font-size:.7rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--g);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.col-label::after{content:'';flex:1;height:1px;background:linear-gradient(to right,rgba(16,185,129,.3),transparent)}
+
+/* COLUMNA CRISTINA */
+.col-cristina{background:var(--pink);border-radius:14px;padding:1.5rem;border:1px solid rgba(16,185,129,.1)}
+.dato{padding:.65rem 0;border-bottom:1px solid rgba(16,185,129,.08)}
+.dato:last-child{border-bottom:none}
+.dato-lbl{font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:.2rem}
+.dato-val{font-size:.92rem;color:var(--dark);font-weight:500}
+.dato-val.precio{color:var(--g);font-size:1.05rem;font-weight:600}
+
+/* COLUMNA CLIENTE */
+.col-cliente{background:var(--beige);border-radius:14px;padding:1.5rem;border:1px solid rgba(16,185,129,.15)}
+.fg{margin-bottom:.9rem}
+.fg:last-child{margin-bottom:0}
+label{display:block;font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:.35rem}
+input{width:100%;padding:.65rem .9rem;border:1.5px solid rgba(16,185,129,.2);border-radius:9px;font-family:'Inter',sans-serif;font-size:.88rem;color:var(--dark);background:white;outline:none;transition:border .2s}
+input:focus{border-color:var(--g);box-shadow:0 0 0 3px rgba(16,185,129,.08)}
+input.err{border-color:#EF4444}
+
+/* CONDICIONES */
+.cond{background:var(--pink);border-radius:14px;padding:1.5rem;border:1px solid rgba(16,185,129,.1);margin-bottom:1.5rem}
+.cond h3{font-family:'Playfair Display',serif;font-size:1rem;font-weight:600;color:var(--dark);margin-bottom:.85rem}
+.cond ul{list-style:none;display:flex;flex-direction:column;gap:.45rem}
+.cond li{display:flex;gap:.6rem;font-size:.82rem;color:var(--dark);line-height:1.5}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--g);flex-shrink:0;margin-top:.45rem}
+
+/* CHECKBOX */
+.acepto-row{display:flex;align-items:flex-start;gap:.75rem;margin-bottom:1.5rem}
+.acepto-row input[type=checkbox]{width:18px;height:18px;accent-color:var(--g);flex-shrink:0;margin-top:2px;cursor:pointer}
+.acepto-row label{font-size:.85rem;color:var(--dark);line-height:1.5;cursor:pointer}
+.acepto-row label strong{color:var(--g)}
+
+/* BOTÓN */
+.btn{width:100%;background:linear-gradient(135deg,var(--g),var(--lg));color:white;border:none;padding:1.2rem 2rem;border-radius:13px;font-family:'Inter',sans-serif;font-size:.95rem;font-weight:600;cursor:pointer;transition:all .3s;box-shadow:0 4px 20px rgba(16,185,129,.25);display:flex;align-items:center;justify-content:center;gap:.75rem}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(16,185,129,.35)}
+.btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.nota{text-align:center;font-size:.76rem;color:var(--gray);margin-top:.65rem}
+.ok-msg{display:none;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.3);border-radius:10px;padding:.9rem 1.25rem;text-align:center;margin-top:.85rem;font-size:.85rem;color:var(--g);font-weight:500}
+
+@media(max-width:768px){.cols{grid-template-columns:1fr}.wrap{padding:2rem}h1{font-size:2rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Empieza hoy</h1>
+  <p class="sub">Rellena tus datos, genera el pre-contrato y envíamelo firmado</p>
+
+  <div class="compromiso">
+    <p>"Conforme a lo establecido en este documento, las partes acuerdan trabajar de forma conjunta para realizar todas las actividades descritas en la propuesta de Contabilidad Estratégica."</p>
+  </div>
+
+  <div class="cols">
+    <!-- CRISTINA -->
+    <div>
+      <div class="col-label">Datos de Cristina Montaner</div>
+      <div class="col-cristina">
+        <div class="dato"><div class="dato-lbl">Nombre completo</div><div class="dato-val">Cristina Montaner Rodríguez</div></div>
+        <div class="dato"><div class="dato-lbl">Servicio</div><div class="dato-val">Contabilidad Estratégica · Freelance</div></div>
+        <div class="dato"><div class="dato-lbl">Email de contacto</div><div class="dato-val" id="em"></div></div>
+        <div class="dato"><div class="dato-lbl">Teléfono</div><div class="dato-val">+34 677 221 810</div></div>
+        <div class="dato"><div class="dato-lbl">Inversión acordada</div><div class="dato-val precio">1.500€ + IVA / mes</div></div>
+      </div>
+    </div>
+
+    <!-- CLIENTE -->
+    <div>
+      <div class="col-label">Tus datos</div>
+      <div class="col-cliente">
+        <div class="fg"><label for="nombre">Nombre completo *</label><input id="nombre" type="text" placeholder="Tu nombre y apellidos"></div>
+        <div class="fg"><label for="empresa">Empresa / Estudio *</label><input id="empresa" type="text" placeholder="Nombre de tu empresa"></div>
+        <div class="fg"><label for="nif">NIF / CIF *</label><input id="nif" type="text" placeholder="Tu NIF o CIF"></div>
+        <div class="fg"><label for="emailc">Email *</label><input id="emailc" type="email" placeholder="tu@email.com"></div>
+        <div class="fg"><label for="tel">Teléfono</label><input id="tel" type="tel" placeholder="+34 600 000 000"></div>
+        <div class="fg"><label for="fecha">Fecha de hoy *</label><input id="fecha" type="date"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONDICIONES -->
+  <div class="cond">
+    <h3>Condiciones del acuerdo</h3>
+    <ul>
+      <li><div class="dot"></div>El servicio se presta mensualmente por un importe de <strong>1.500€ + IVA</strong>.</li>
+      <li><div class="dot"></div>El cliente entregará toda la documentación contable del año en curso antes de iniciar el servicio.</li>
+      <li><div class="dot"></div>Garantía de resultado: si al finalizar el primer cierre trimestral no hay claridad financiera, se continúa sin coste adicional.</li>
+      <li><div class="dot"></div>Respuesta garantizada en 24h hábiles a cualquier consulta contable.</li>
+      <li><div class="dot"></div>Acceso a la contabilidad organizada en el software acordado en menos de 72h hábiles desde la entrega de documentación.</li>
+      <li><div class="dot"></div>Este documento tiene carácter de pre-acuerdo. El contrato definitivo será firmado por ambas partes.</li>
+    </ul>
+  </div>
+
+  <!-- ACEPTACIÓN -->
+  <div class="acepto-row">
+    <input type="checkbox" id="acepto">
+    <label for="acepto">He leído y acepto las condiciones del acuerdo. Entiendo que este es un <strong>pre-contrato</strong> y que recibiré el contrato definitivo firmado por Cristina Montaner.</label>
+  </div>
+
+  <button class="btn" id="btn" onclick="generarPDF()">📄 Generar pre-contrato en PDF</button>
+  <p class="nota" id="nota"></p>
+  <div class="ok-msg" id="ok"></div>
+</div>
+
+<script>
+// --- Email inyectado por JS para evitar filtros ---
+(function(){
+  var u='cristina.proasistente';
+  var d='gmail.com';
+  var e=u+'@'+d;
+  document.getElementById('em').textContent=e;
+  document.getElementById('nota').textContent='El PDF se descargará automáticamente · Fírmalo y envíalo a '+e;
+  document.getElementById('ok').innerHTML='✅ PDF generado. Envíalo firmado a <strong>'+e+'</strong>';
+})();
+
+// --- Fecha de hoy ---
+(function(){
+  var hoy=new Date();
+  var d=String(hoy.getDate()).padStart(2,'0');
+  var m=String(hoy.getMonth()+1).padStart(2,'0');
+  var y=hoy.getFullYear();
+  document.getElementById('fecha').value=y+'-'+m+'-'+d;
+})();
+
+// --- Validación ---
+function validar(){
+  var ids=['nombre','empresa','nif','emailc','fecha'];
+  var ok=true;
+  ids.forEach(function(id){
+    var el=document.getElementById(id);
+    if(!el.value.trim()){el.classList.add('err');ok=false;}
+    else el.classList.remove('err');
+  });
+  if(!document.getElementById('acepto').checked){
+    alert('Por favor acepta las condiciones antes de continuar.');
+    ok=false;
+  }
+  return ok;
+}
+
+function fmtFecha(str){
+  if(!str)return'';
+  var p=str.split('-');
+  return p[2]+' / '+p[1]+' / '+p[0];
+}
+
+// --- Generar PDF usando Canvas + ventana de impresión (sin librerías externas) ---
+function generarPDF(){
+  if(!validar())return;
+
+  var nombre=document.getElementById('nombre').value.trim();
+  var empresa=document.getElementById('empresa').value.trim();
+  var nif=document.getElementById('nif').value.trim();
+  var emailc=document.getElementById('emailc').value.trim();
+  var tel=document.getElementById('tel').value.trim()||'—';
+  var fecha=fmtFecha(document.getElementById('fecha').value);
+
+  var u='cristina.proasistente';var d='gmail.com';var em=u+'@'+d;
+
+  var hoy=new Date();
+  var dd=String(hoy.getDate()).padStart(2,'0');
+  var mm=String(hoy.getMonth()+1).padStart(2,'0');
+  var yyyy=hoy.getFullYear();
+  var docId='DOC-'+Date.now().toString(36).toUpperCase();
+
+  var html='<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">'
+  +'<style>'
+  +'@page{size:A4 portrait;margin:0}'
+  +'*{margin:0;padding:0;box-sizing:border-box}'
+  +'body{font-family:Arial,sans-serif;font-size:11pt;color:#374151;background:white;width:210mm;min-height:297mm}'
+  +'.header{background:#10B981;color:white;padding:18pt 28pt}'
+  +'.header .pre{font-size:8pt;letter-spacing:2px;text-transform:uppercase;opacity:.85;margin-bottom:5pt}'
+  +'.header h1{font-size:20pt;font-weight:bold;margin-bottom:4pt}'
+  +'.header .contact{font-size:9pt;opacity:.9}'
+  +'.body{padding:20pt 28pt}'
+  +'.intro{font-size:10.5pt;line-height:1.7;color:#555;margin-bottom:16pt;font-style:italic}'
+  +'.sep{border:none;border-top:1.5pt solid #10B981;margin:14pt 0}'
+  +'.cols{display:grid;grid-template-columns:1fr 1fr;gap:14pt;margin-bottom:16pt}'
+  +'.col-box{border-radius:6pt;padding:12pt}'
+  +'.col-a{background:#F0FDF9}'
+  +'.col-b{background:#FDF2F8}'
+  +'.col-title{font-size:7.5pt;font-weight:bold;letter-spacing:1.5px;text-transform:uppercase;color:#10B981;margin-bottom:9pt}'
+  +'.row{margin-bottom:7pt}'
+  +'.row .lbl{font-size:7.5pt;font-weight:bold;letter-spacing:1px;text-transform:uppercase;color:#9CA3AF;margin-bottom:2pt}'
+  +'.row .val{font-size:10.5pt;color:#374151}'
+  +'.row .val.precio{color:#10B981;font-weight:bold;font-size:13pt}'
+  +'.section-title{font-size:9pt;font-weight:bold;color:#374151;margin-bottom:8pt;text-transform:uppercase;letter-spacing:1px}'
+  +'.cond-list{list-style:none}'
+  +'.cond-list li{display:flex;gap:8pt;margin-bottom:5pt;font-size:10pt;line-height:1.55;color:#374151}'
+  +'.cond-list li::before{content:"•";color:#10B981;font-size:13pt;line-height:1;flex-shrink:0}'
+  +'.firmas{display:grid;grid-template-columns:1fr 1fr;gap:14pt;margin-top:16pt}'
+  +'.firma-box{border-radius:6pt;padding:12pt}'
+  +'.firma-a{background:#F0FDF9}'
+  +'.firma-b{background:#FDF2F8}'
+  +'.firma-title{font-size:8pt;font-weight:bold;letter-spacing:1.5px;text-transform:uppercase;color:#10B981;margin-bottom:7pt}'
+  +'.firma-dato{font-size:9pt;color:#9CA3AF;margin-bottom:3pt}'
+  +'.firma-line{border-top:1.5pt solid #10B981;margin-top:32pt;margin-bottom:4pt}'
+  +'.firma-lbl-line{font-size:8pt;color:#aaa}'
+  +'.pending{font-size:9pt;color:#aaa;margin-top:18pt}'
+  +'.footer{background:#10B981;color:white;padding:9pt 28pt;display:flex;justify-content:space-between;font-size:8pt;margin-top:20pt}'
+  +'@media print{'
+  +'body{-webkit-print-color-adjust:exact;print-color-adjust:exact}'
+  +'}'
+  +'</style></head><body>'
+  +'<div class="header">'
+  +'<div class="pre">Pre-contrato de colaboración</div>'
+  +'<h1>Contabilidad Estratégica</h1>'
+  +'<div class="contact">Cristina Montaner Rodríguez · '+em+' · +34 677 221 810</div>'
+  +'</div>'
+  +'<div class="body">'
+  +'<p class="intro">Conforme a lo establecido en este documento, las partes acuerdan trabajar de forma conjunta para realizar todas las actividades descritas en la propuesta de Contabilidad Estratégica.</p>'
+  +'<hr class="sep">'
+  +'<div class="cols">'
+  +'<div class="col-box col-a">'
+  +'<div class="col-title">Cristina Montaner Rodríguez</div>'
+  +'<div class="row"><div class="lbl">Servicio</div><div class="val">Contabilidad Estratégica · Freelance</div></div>'
+  +'<div class="row"><div class="lbl">Email</div><div class="val">'+em+'</div></div>'
+  +'<div class="row"><div class="lbl">Teléfono</div><div class="val">+34 677 221 810</div></div>'
+  +'<div class="row"><div class="lbl">Inversión</div><div class="val precio">1.500€ + IVA / mes</div></div>'
+  +'</div>'
+  +'<div class="col-box col-b">'
+  +'<div class="col-title">Datos del cliente</div>'
+  +'<div class="row"><div class="lbl">Nombre completo</div><div class="val">'+nombre+'</div></div>'
+  +'<div class="row"><div class="lbl">Empresa / Estudio</div><div class="val">'+empresa+'</div></div>'
+  +'<div class="row"><div class="lbl">NIF / CIF</div><div class="val">'+nif+'</div></div>'
+  +'<div class="row"><div class="lbl">Email</div><div class="val">'+emailc+'</div></div>'
+  +'<div class="row"><div class="lbl">Teléfono</div><div class="val">'+tel+'</div></div>'
+  +'<div class="row"><div class="lbl">Fecha de firma</div><div class="val">'+fecha+'</div></div>'
+  +'</div>'
+  +'</div>'
+  +'<hr class="sep">'
+  +'<div class="section-title">Condiciones del acuerdo</div>'
+  +'<ul class="cond-list">'
+  +'<li>El servicio se presta mensualmente por un importe de <strong>1.500€ + IVA</strong>.</li>'
+  +'<li>El cliente entregará toda la documentación contable del año en curso antes de iniciar el servicio.</li>'
+  +'<li>Garantía de resultado: si al finalizar el primer cierre trimestral no hay claridad financiera, se continúa sin coste adicional.</li>'
+  +'<li>Respuesta garantizada en 24h hábiles a cualquier consulta contable.</li>'
+  +'<li>Acceso a la contabilidad organizada en el software acordado en menos de 72h hábiles desde la entrega de documentación.</li>'
+  +'<li>Este documento tiene carácter de pre-acuerdo. El contrato definitivo será firmado por ambas partes.</li>'
+  +'</ul>'
+  +'<div class="firmas">'
+  +'<div class="firma-box firma-a">'
+  +'<div class="firma-title">Cristina Montaner Rodríguez</div>'
+  +'<div class="firma-dato">Email: '+em+'</div>'
+  +'<div class="firma-dato">Tel: +34 677 221 810</div>'
+  +'<div class="pending">Firma pendiente — recibirás el contrato definitivo firmado</div>'
+  +'</div>'
+  +'<div class="firma-box firma-b">'
+  +'<div class="firma-title">'+nombre.toUpperCase()+'</div>'
+  +'<div class="firma-dato">Empresa: '+empresa+'</div>'
+  +'<div class="firma-dato">Fecha: '+fecha+'</div>'
+  +'<div class="firma-line"></div>'
+  +'<div class="firma-lbl-line">Firma del cliente</div>'
+  +'</div>'
+  +'</div>'
+  +'</div>'
+  +'<div class="footer">'
+  +'<span>Cristina Montaner · Contabilidad Estratégica · '+em+' · +34 677 221 810</span>'
+  +'<span>'+docId+'</span>'
+  +'</div>'
+  +'</body></html>';
+
+  var w=window.open('','_blank','width=794,height=1123');
+  w.document.write(html);
+  w.document.close();
+  w.focus();
+  setTimeout(function(){w.print();},800);
+
+  var btn=document.getElementById('btn');
+  btn.innerHTML='✅ PDF generado — ¡envíamelo firmado!';
+  btn.style.background='linear-gradient(135deg,#065F46,#10B981)';
+  document.getElementById('ok').style.display='block';
+}
+</script>
+</body>
+</html>

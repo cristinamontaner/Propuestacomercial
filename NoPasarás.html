@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Estándares de Calidad - Hitos de Calidad</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #10B981;
+            --light-green: #6EE7B7;
+            --beige: #F5F5DC;
+            --soft-gray: #9CA3AF;
+            --light-pink: #FDF2F8;
+            --neutral-800: #374151;
+            --neutral-600: #4B5563;
+            --warning-orange: #F59E0B;
+            --gradient-bg: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 50%, #E5E7EB 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--gradient-bg);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            color: var(--neutral-800);
+            overflow-x: auto;
+        }
+
+        .slide-container {
+            max-width: 1400px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid rgba(16, 185, 129, 0.1);
+            padding: 4rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .slide-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-green), var(--light-green));
+        }
+
+        .slide-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .slide-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--warning-orange), #EF4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+        }
+
+        .slide-subtitle {
+            font-size: 1.25rem;
+            color: var(--soft-gray);
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+        }
+
+        .commitment-box {
+            background: linear-gradient(135deg, var(--warning-orange), #F97316);
+            color: white;
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: slideInDown 0.8s ease-out 0.3s both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .commitment-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .commitment-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .commitment-text {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        .phases-checkpoints {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .checkpoint-card {
+            background: var(--light-pink);
+            border-radius: 20px;
+            padding: 2.5rem;
+            position: relative;
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+            animation: slideUpStagger 0.8s ease-out both;
+        }
+
+        .checkpoint-card:nth-child(1) { animation-delay: 0.4s; }
+        .checkpoint-card:nth-child(2) { animation-delay: 0.6s; }
+        .checkpoint-card:nth-child(3) { animation-delay: 0.8s; }
+        .checkpoint-card:nth-child(4) { animation-delay: 1.0s; }
+
+        .checkpoint-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--warning-orange);
+            box-shadow: 0 15px 40px rgba(245, 158, 11, 0.15);
+        }
+
+        .checkpoint-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .phase-number-checkpoint {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--warning-orange), #F97316);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-right: 1rem;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .checkpoint-phase-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--neutral-800);
+            flex: 1;
+        }
+
+        .gate-icon {
+            font-size: 2rem;
+            color: var(--warning-orange);
+        }
+
+        .checkpoint-requirements {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .requirements-title {
+            font-weight: 600;
+            color: var(--warning-orange);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .requirement-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .requirement-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .requirement-icon {
+            color: var(--warning-orange);
+            margin-right: 0.75rem;
+            margin-top: 2px;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .checkpoint-promise {
+            background: var(--beige);
+            border-radius: 12px;
+            padding: 1.25rem;
+            border-left: 4px solid var(--primary-green);
+        }
+
+        .promise-title {
+            font-weight: 600;
+            color: var(--primary-green);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .promise-text {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: var(--neutral-800);
+            font-style: italic;
+        }
+
+        .quality-commitment {
+            background: var(--beige);
+            border-radius: 16px;
+            padding: 2.5rem;
+            text-align: center;
+            border: 2px solid var(--primary-green);
+            animation: fadeInUp 1s ease-out 1.2s both;
+            position: relative;
+        }
+
+        .quality-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--primary-green), var(--light-green));
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .quality-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-green);
+            margin-bottom: 1rem;
+        }
+
+        .quality-text {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--neutral-800);
+            margin-bottom: 1.5rem;
+        }
+
+        .quality-highlight {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--warning-orange);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            overflow: hidden;
+            border-radius: 24px;
+        }
+
+        .floating-gate {
+            position: absolute;
+            font-size: 2rem;
+            color: rgba(245, 158, 11, 0.1);
+            animation: floatGate 6s ease-in-out infinite;
+        }
+
+        .gate-1 { top: 20%; right: 5%; animation-delay: 0s; }
+        .gate-2 { bottom: 30%; left: 3%; animation-delay: 2s; }
+        .gate-3 { top: 60%; right: 8%; animation-delay: 4s; }
+
+        @keyframes floatGate {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        /* Animaciones */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUpStagger {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .phases-checkpoints {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .slide-container {
+                padding: 2rem;
+            }
+            
+            .slide-title {
+                font-size: 2.5rem;
+            }
+            
+            .checkpoint-card {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="floating-elements">
+            <div class="floating-gate gate-1">🚪</div>
+            <div class="floating-gate gate-2">🛡️</div>
+            <div class="floating-gate gate-3">✋</div>
+        </div>
+
+        <header class="slide-header">
+            <h1 class="slide-title">Mis Estándares de Calidad</h1>
+            <p class="slide-subtitle">Hitos de calidad que debes cumplir para avanzar</p>
+        </header>
+
+        <div class="commitment-box">
+            <h2 class="commitment-title">Mi compromiso contigo</h2>
+            <p class="commitment-text">
+                No avanzo a la siguiente fase hasta que hayas alcanzado los resultados específicos de la fase actual. 
+                Tu éxito es mi prioridad, no simplemente "completar tareas".
+            </p>
+        </div>
+
+        <div class="phases-checkpoints">
+            <!-- Fase 0 Checkpoint -->
+            <div class="checkpoint-card">
+                <div class="checkpoint-header">
+                    <div class="phase-number-checkpoint">0</div>
+                    <h3 class="checkpoint-phase-title">Diagnóstico Completo</h3>
+                    <div class="gate-icon">🚪</div>
+                </div>
+
+                <div class="checkpoint-requirements">
+                    <div class="requirements-title">
+                        ⚠️ Para pasar a Organización, debes tener:
+                    </div>
+                    <div class="requirement-item">
+                        <span class="requirement-icon">▶</span>
+                        <span>Acceso completo configurado a tu software contable</span>
+                    </div>
+                    <div class="requirement-item">
+                        <span class="requirement-icon">▶</span>
+                        <span>Diagnóstico escrito revisado y aprobado por ti</span>
+                    </div>
+                    <div class="requirement-item">
+                        <span class="requirement-icon">▶</span>
+                        <span>Plan de acción claro que entiendas al 100%</span>
+                    </div>
+                    <div class="requirement-item">
+                        <span class="requirement-icon">▶</span>
+                        <span>Todos tus documentos y facturas organizados</span>
+                    </div>
+                </div>
+
+                <div class="checkpoint-promise">
+                    <div class="promise-title">Mi promesa</div>
+                    <div class="promise-text">
+                        No empiezo a organizar tu contabilidad hasta que tengas claridad total sobre tu situación actual y el camino a seguir.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fase 1 Checkpoint -->
+            <div class="checkpoint-card">
+                <div class="checkpoint-header">
+                    <div class="phase-number-checkpoint">1</div>
+                    <h3 class="checkpoint-phase-title">Base Contable Sólida</h3>
+                    <div class="gate-icon">🛡️</div>
+                </div>
+
+                <div class="checkpoint-requirements">
+                    <div class="requirements-title">
+                        ⚠️ Para pasar a Análisis, debes tener:
+                    </div>
+                    <div class="requirement-item">
+                        <span class="requirement-icon">▶</span>
+                        <span>Contabilidad al día y sin errores o lagunas</span>
+                    </div>
+                    <div class="requirement-item">
+                        <span class="requirement-icon">▶</span>
+                        <span>Todos los ingresos y gastos correctamente clasificados</span>
+                    </div>
+                    <div class="requirement-item">
+                        <span class="requirement-icon">▶</span>
+                        <span>Estructura de proyectos/clientes funcionando</span>
+                    </div>
+                    <div class="requirement-item">
+                        <span class="requirement-icon">▶</span>
+                        <span>Puedes acceder a tus números desde tu software</span>
+                    </div>
+                </div>
+
+                <div class="checkpoint-promise">
+                    <div class="promise-title">Mi promesa</div>
+                    <div class="promise-text">
+                        No genero análisis sobre datos incorrectos. Tu base contable debe estar perfecta antes de extraer conclusiones.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fase 2 Checkpoint -->
+            <div class="checkpoint-card">
+                <div class="checkpoint-header">
+                    <div class="phase-number-checkpoint">2</div>
+                    <h3 class="checkpoint-phase-title">Claridad Financiera Real</h3>
+                    <div class="gate-icon">✋</div>
+                </div>
+
+                <div class="checkpoint-requirements">
+                    <div class="requirements-title">
+                        ⚠️ Para pasar a Control Continuo, debes tener:
+                    </div>
+                    <div class="requirement-item">
+                        <span class="requirement-icon">▶</span>
+                        <span>Entiendes perfectamente tus márgenes reales</span>
+                    </div>
+                    <div class="requirement-item">
+                        <span class="requirement-icon">▶</span>
+                        <span>Sabes qué proyectos/clientes son más rentables</span>
+                    </div>
+                    <div class="requirement-item">
+                        <span class="requirement-icon">▶</span>
+                        <span>Puedes leer e interpretar tu dashboard sin ayuda</span>
+                    </div>
+                    <div class="requirement-item">
+                        <span class="requirement-icon">▶</span>
+                        <span>Has tomado al menos 1 decisión basada en los datos</span>
+                    </div>
+                </div>
+
+                <div class="checkpoint-promise">
+                    <div class="promise-title">Mi promesa</div>
+                    <div class="promise-text">
+                        No paso a mantenimiento hasta que demuestres que puedes usar los análisis para tomar decisiones reales en tu negocio.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fase 3 Checkpoint -->
+            <div class="checkpoint-card">
+                <div class="checkpoint-header">
+                    <div class="phase-number-checkpoint">3</div>
+                    <h3 class="checkpoint-phase-title">Autonomía con Soporte</h3>
+                    <div class="gate-icon">🎯</div>
+                </div>
+
+                <div class="checkpoint-requirements">
+                    <div class="requirements-title">
+                        ⚠️ Para mantener el servicio funcionando, debes tener:
+                    </div>
+                    <div class="requirement-item">
+                        <span class="requirement-icon">▶</span>
+                        <span>Proceso mensual de envío de documentos establecido</span>
+                    </div>
+                    <div class="requirement-item">
+                        <span class="requirement-icon">▶</span>
+                        <span>Revisas y usas activamente el informe mensual</span>
+                    </div>
+                    <div class="requirement-item">
+                        <span class="requirement-icon">▶</span>
+                        <span>Me consultas dudas financieras estratégicas</span>
+                    </div>
+                    <div class="requirement-item">
+                        <span class="requirement-icon">▶</span>
+                        <span>Sientes control y confianza en tus decisiones</span>
+                    </div>
+                </div>
+
+                <div class="checkpoint-promise">
+                    <div class="promise-title">Mi promesa</div>
+                    <div class="promise-text">
+                        Mantengo la calidad y relevancia del servicio. Si no encuentras valor en los informes, ajustamos hasta que sea útil para ti.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quality-commitment">
+            <div class="quality-badge">Garantía de Resultados</div>
+            <h2 class="quality-title">Mi estándar de calidad</h2>
+            <p class="quality-text">
+                Cada fase tiene criterios específicos de éxito. No avanzo hasta que los cumplas porque mi reputación 
+                se basa en tus resultados reales, no en tareas completadas.
+            </p>
+            <p class="quality-highlight">
+                Tu éxito es mi métrica de éxito.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

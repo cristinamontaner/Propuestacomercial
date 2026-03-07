@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Método DOAS · Cristina Montaner</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green:      #10B981;
+    --green-mid:  #6EE7B7;
+    --green-light:#6EE7B7;
+    --beige:      #F5F5DC;
+    --beige-dark: #E5E7EB;
+    --pink:       #FDF2F8;
+    --gray:       #9CA3AF;
+    --dark:       #374151;
+    --white:      #F9FAFB;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 50%, #E5E7EB 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+
+  .slide {
+    width: min(1280px, 100%);
+    min-height: 720px;
+    background: var(--white);
+    border-radius: 4px;
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    box-shadow: 0 8px 60px rgba(45,106,79,0.12);
+    position: relative;
+  }
+
+  /* Decorative corner accent */
+  .slide::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 220px; height: 220px;
+    background: radial-gradient(circle at top right, rgba(168,213,186,0.25) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .slide::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 180px; height: 180px;
+    background: radial-gradient(circle at bottom left, rgba(240,228,224,0.5) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* HEADER */
+  .header {
+    padding: 48px 64px 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .header-left {}
+
+  .eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--green-mid);
+    margin-bottom: 10px;
+  }
+
+  .method-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 58px;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--dark);
+    letter-spacing: -0.01em;
+  }
+
+  .method-name span {
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  .method-tagline {
+    font-size: 13px;
+    color: var(--gray);
+    margin-top: 10px;
+    font-weight: 300;
+    letter-spacing: 0.03em;
+  }
+
+  .header-right {
+    text-align: right;
+    padding-top: 6px;
+  }
+
+  .author {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green-mid);
+    font-weight: 500;
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, var(--green-light), transparent);
+    margin: 24px 64px 0;
+    opacity: 0.6;
+  }
+
+  /* MAIN CONTENT */
+  .main {
+    padding: 36px 64px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* GPS badge */
+  .gps-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--green);
+    color: white;
+    padding: 6px 16px 6px 10px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    width: fit-content;
+  }
+
+  .gps-badge .dot {
+    width: 6px; height: 6px;
+    background: var(--green-light);
+    border-radius: 50%;
+  }
+
+  /* PHASES ROW */
+  .phases {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    position: relative;
+    margin-bottom: 28px;
+  }
+
+  .phase {
+    flex: 1;
+    position: relative;
+    animation: fadeUp 0.5s ease both;
+  }
+  .phase:nth-child(1) { animation-delay: 0.05s; }
+  .phase:nth-child(2) { animation-delay: 0.15s; }
+  .phase:nth-child(3) { animation-delay: 0.25s; }
+  .phase:nth-child(4) { animation-delay: 0.35s; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .phase-card {
+    background: var(--white);
+    border: 1px solid rgba(168,213,186,0.4);
+    border-right: none;
+    padding: 28px 28px 28px 28px;
+    height: 100%;
+    position: relative;
+    transition: background 0.2s;
+  }
+
+  .phase:last-child .phase-card {
+    border-right: 1px solid rgba(168,213,186,0.4);
+  }
+
+  .phase:first-child .phase-card {
+    border-radius: 8px 0 0 8px;
+  }
+  .phase:last-child .phase-card {
+    border-radius: 0 8px 8px 0;
+  }
+
+  /* Active highlight on phase 1 */
+  .phase.active .phase-card {
+    background: var(--green);
+    border-color: var(--green);
+  }
+  .phase.active .phase-number { color: rgba(255,255,255,0.4); }
+  .phase.active .phase-label  { color: white; }
+  .phase.active .phase-desc   { color: rgba(255,255,255,0.75); }
+  .phase.active .phase-items li { color: rgba(255,255,255,0.75); }
+  .phase.active .phase-items li::before { background: rgba(255,255,255,0.5); }
+
+  /* Arrow between phases */
+  .phase-arrow {
+    position: absolute;
+    right: -18px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 50%, #E5E7EB 100%);
+    border: 1px solid rgba(168,213,186,0.5);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .phase-arrow svg {
+    width: 14px; height: 14px;
+    fill: none;
+    stroke: var(--green-mid);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .phase-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--green-light);
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+
+  .phase-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--green);
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  .phase-desc {
+    font-size: 12px;
+    color: var(--gray);
+    line-height: 1.55;
+    font-weight: 300;
+    margin-bottom: 14px;
+    min-height: 36px;
+  }
+
+  .phase-items {
+    list-style: none;
+  }
+
+  .phase-items li {
+    font-size: 11.5px;
+    color: var(--gray);
+    padding: 4px 0;
+    padding-left: 14px;
+    position: relative;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  .phase-items li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 5px; height: 5px;
+    background: var(--green-light);
+    border-radius: 50%;
+  }
+
+  /* BOTTOM ROW */
+  .bottom-row {
+    display: flex;
+    align-items: stretch;
+    gap: 16px;
+    margin-top: 4px;
+  }
+
+  .insight-box {
+    flex: 2;
+    background: var(--beige-dark);
+    border-radius: 8px;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .insight-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+
+  .insight-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--dark);
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  .insight-text strong {
+    font-weight: 600;
+    color: var(--green);
+    font-style: normal;
+  }
+
+  .result-box {
+    flex: 1;
+    background: var(--pink);
+    border-radius: 8px;
+    padding: 18px 24px;
+  }
+
+  .result-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--green-mid);
+    margin-bottom: 8px;
+  }
+
+  .result-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--dark);
+    line-height: 1.35;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 20px 64px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-line {
+    height: 1px;
+    background: linear-gradient(to right, var(--green-light), transparent);
+    margin: 0 64px;
+    opacity: 0.4;
+  }
+
+  .footer-left {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green-light);
+    font-weight: 500;
+  }
+
+  .footer-right {
+    font-size: 10px;
+    color: var(--beige-dark);
+    letter-spacing: 0.06em;
+  }
+
+  /* DOAS acronym pill */
+  .acronym-row {
+    display: flex;
+    gap: 6px;
+    margin-top: 2px;
+  }
+
+  .acronym-letter {
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    background: var(--green);
+    color: white;
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .acronym-letter.light {
+    background: var(--green-light);
+    color: var(--green);
+  }
+
+
+  @media (max-width: 768px) {
+    body { padding: 16px 12px; }
+    .slide { width: 100%; min-height: unset; border-radius: 12px; grid-template-rows: auto auto 1fr; }
+    .header { padding: 32px 24px 0; flex-direction: column; gap: 8px; }
+    .method-name { font-size: 38px; }
+    .divider { margin: 16px 24px 0; }
+    .main { padding: 24px 24px 36px; }
+    .gps-badge { font-size: 10px; margin-bottom: 20px; }
+    .phases { flex-direction: column; gap: 12px; }
+    .phase-card { border-radius: 8px !important; border: 1px solid rgba(168,213,186,0.4) !important; }
+    .phase-arrow { display: none; }
+    .phase-label { font-size: 22px; }
+    .bottom-row { flex-direction: column; gap: 12px; }
+    .insight-text { font-size: 14px; }
+    .result-text { font-size: 15px; }
+    .acronym-row { flex-wrap: wrap; }
+  }
+
+</style>
+</head>
+<body>
+
+<div class="slide">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <div class="method-name">Método <span>DOAS</span></div>
+      <div class="acronym-row">
+        <div class="acronym-letter">D</div>
+        <div class="acronym-letter light">O</div>
+        <div class="acronym-letter">A</div>
+        <div class="acronym-letter light">S</div>
+      </div>
+      <div class="method-tagline">Diagnóstico · Organización · Análisis · Seguimiento</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <div class="gps-badge">
+      <div class="dot"></div>
+      GPS Financiero para estudios y agencias SL
+    </div>
+
+    <!-- PHASES -->
+    <div class="phases">
+
+      <!-- D -->
+      <div class="phase active">
+        <div class="phase-card">
+          <div class="phase-number">01</div>
+          <div class="phase-label">Diagnóstico</div>
+          <div class="phase-desc">Antes de proponer nada, entiendo dónde está tu negocio realmente.</div>
+          <ul class="phase-items">
+            <li>Estado real de la contabilidad</li>
+            <li>Qué información falta o está mal</li>
+            <li>Contabilidad completa del año en curso</li>
+            <li>Qué decisiones tienes pendientes</li>
+          </ul>
+        </div>
+        <div class="phase-arrow">
+          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+
+      <!-- O -->
+      <div class="phase">
+        <div class="phase-card">
+          <div class="phase-number">02</div>
+          <div class="phase-label">Organización</div>
+          <div class="phase-desc">Estructura limpia, accesible y con sentido para el negocio.</div>
+          <ul class="phase-items">
+            <li>Centralización de documentación</li>
+            <li>Categorización de ingresos y gastos</li>
+            <li>Acceso real a tu contabilidad</li>
+            <li>Base sólida para el análisis</li>
+          </ul>
+        </div>
+        <div class="phase-arrow">
+          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+
+      <!-- A -->
+      <div class="phase">
+        <div class="phase-card">
+          <div class="phase-number">03</div>
+          <div class="phase-label">Análisis</div>
+          <div class="phase-desc">Números transformados en decisiones concretas de negocio.</div>
+          <ul class="phase-items">
+            <li>Márgenes reales por proyecto</li>
+            <li>Informes claros sin tecnicismos</li>
+            <li>Rentabilidad y flujo de caja</li>
+            <li>Base para contratar o invertir</li>
+          </ul>
+        </div>
+        <div class="phase-arrow">
+          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+
+      <!-- S -->
+      <div class="phase">
+        <div class="phase-card">
+          <div class="phase-number">04</div>
+          <div class="phase-label">Seguimiento</div>
+          <div class="phase-desc">Soporte continuo para que ninguna decisión quede sin respaldo.</div>
+          <ul class="phase-items">
+            <li>Cierre mensual revisado</li>
+            <li>Punto de contacto directo</li>
+            <li>Alertas ante desviaciones</li>
+            <li>Evolución del negocio en datos</li>
+          </ul>
+        </div>
+      </div>
+
+    </div><!-- /phases -->
+
+    <!-- BOTTOM ROW -->
+    <div class="bottom-row">
+      <div class="insight-box">
+        <div class="insight-icon">💡</div>
+        <div class="insight-text">
+          Lo que te hace diferente no es el proceso — es el <strong>criterio</strong>.<br>
+          Saber qué número mirar en cada momento del negocio no está en ninguna plantilla.
+        </div>
+      </div>
+      <div class="result-box">
+        <div class="result-label">Resultado del método</div>
+        <div class="result-text">De decisiones con intuición a decisiones con datos, en un trimestre.</div>
+      </div>
+    </div>
+
+  </div><!-- /main -->
+
+  </div>
+
+</div>
+
+</body>
+</html>

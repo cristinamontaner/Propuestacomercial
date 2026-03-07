@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bonus Exclusivos · Cristina Montaner</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --green: #10B981; --green-mid: #6EE7B7; --green-light: #6EE7B7;
+    --beige: #F5F5DC; --beige-dark: #E5E7EB; --pink: #FDF2F8;
+    --gray: #9CA3AF; --dark: #374151; --white: #F9FAFB;
+    --gold: #FEF3C7; --gold-mid: #FDE68A; --gold-dark: #D97706;
+  }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 50%, #E5E7EB 100%);
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh; padding: 40px 20px;
+  }
+  .slide {
+    width: min(1280px, 100%); min-height: 720px; background: var(--white);
+    border-radius: 4px; overflow: hidden;
+    display: grid; grid-template-rows: auto auto 1fr auto;
+    box-shadow: 0 8px 60px rgba(16,185,129,0.12); position: relative;
+  }
+  .slide::before {
+    content: ''; position: absolute; top: 0; right: 0;
+    width: 220px; height: 220px;
+    background: radial-gradient(circle at top right, rgba(110,231,183,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .slide::after {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle at bottom left, rgba(254,243,199,0.5) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header { padding: 44px 64px 0; display: flex; align-items: flex-start; justify-content: space-between; }
+  .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green); margin-bottom: 10px; }
+  .title { font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 700; color: var(--dark); line-height: 1; }
+  .title span { color: var(--green); }
+  .subtitle { font-size: 13px; color: var(--gray); margin-top: 8px; font-weight: 300; }
+  .author { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green); font-weight: 600; }
+  .divider { height: 1px; background: linear-gradient(to right, var(--green-light), transparent); margin: 22px 64px 0; opacity: 0.5; }
+  .main { padding: 28px 64px 0; display: flex; flex-direction: column; gap: 18px; }
+  .bonus-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .bonus-card {
+    background: var(--gold); border-radius: 12px; padding: 28px 24px 24px;
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column; gap: 10px;
+    border: 1px solid var(--gold-mid);
+    animation: fadeUp 0.5s ease both;
+  }
+  .bonus-card:nth-child(1) { animation-delay: 0.05s; }
+  .bonus-card:nth-child(2) { animation-delay: 0.15s; }
+  .bonus-card:nth-child(3) { animation-delay: 0.25s; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .card-number {
+    font-family: 'Playfair Display', serif; font-size: 90px; font-weight: 700;
+    line-height: 1; position: absolute; bottom: 8px; right: 18px;
+    color: var(--gold-mid); opacity: 0.5; pointer-events: none;
+  }
+  .included-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: var(--green); color: white;
+    font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 100px; width: fit-content;
+  }
+  .included-badge .dot { width: 5px; height: 5px; background: var(--green-light); border-radius: 50%; }
+  .bonus-icon { font-size: 28px; margin-bottom: 2px; }
+  .bonus-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--dark); line-height: 1.2; }
+  .bonus-desc { font-size: 12.5px; color: #4B5563; line-height: 1.6; font-weight: 400; flex: 1; }
+  .bonus-value { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+  .value-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold-dark); }
+  .value-amount { font-size: 13px; font-weight: 600; color: var(--gold-dark); background: rgba(217,119,6,0.1); padding: 2px 10px; border-radius: 100px; }
+  .bonus-why { font-size: 11px; color: #6B7280; font-style: italic; line-height: 1.5; border-top: 1px solid rgba(217,119,6,0.15); padding-top: 8px; margin-top: 2px; }
+  .bottom-strip {
+    background: var(--green); margin: 0 64px; border-radius: 10px;
+    padding: 16px 28px; display: flex; align-items: center; gap: 16px;
+  }
+  .strip-icon { font-size: 20px; flex-shrink: 0; }
+  .strip-text { font-family: 'Playfair Display', serif; font-size: 15px; font-style: italic; color: rgba(255,255,255,0.95); line-height: 1.5; }
+  .strip-text strong { font-style: normal; font-weight: 700; color: var(--gold-mid); }
+  .footer-line { height: 1px; background: linear-gradient(to right, var(--green-light), transparent); margin: 16px 64px 0; opacity: 0.4; }
+  .footer { padding: 14px 64px 24px; display: flex; justify-content: space-between; align-items: center; }
+  .footer-left { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green); font-weight: 600; }
+  .footer-right { font-size: 10px; color: var(--gray); }
+
+  @media (max-width: 768px) {
+    body { padding: 16px 12px; }
+    .slide { width: 100%; min-height: unset; border-radius: 12px; grid-template-rows: auto auto 1fr auto; }
+    .header { padding: 32px 24px 0; flex-direction: column; gap: 8px; }
+    .title { font-size: 34px; }
+    .divider { margin: 16px 24px 0; }
+    .main { padding: 24px 24px 0; gap: 16px; }
+    .bonus-grid { grid-template-columns: 1fr; gap: 12px; }
+    .bonus-card { padding: 24px 20px 20px; }
+    .bonus-title { font-size: 18px; }
+    .bonus-desc { font-size: 12px; }
+    .bottom-strip { margin: 0 0 24px; flex-direction: column; gap: 10px; padding: 14px 20px; }
+    .strip-text { font-size: 13px; }
+    .footer { padding: 12px 24px 20px; }
+    .footer-left, .footer-right { font-size: 9px; }
+  }
+
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="header">
+    <div>
+      <div class="title">Valor añadido <span>sin coste extra</span></div>
+      <div class="subtitle">Lo que recibes por encima de la contabilidad — porque busco una relación a largo plazo</div>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <div class="main">
+    <div class="bonus-grid">
+      <div class="bonus-card">
+        <div class="included-badge"><div class="dot"></div>Incluido</div>
+        <div class="bonus-icon">📊</div>
+        <div class="bonus-title">Dashboard Financiero Personalizado</div>
+        <div class="bonus-desc">Dashboard visual interactivo con tus métricas clave actualizadas en tiempo real. Inteligencia de negocio, no solo contabilidad.</div>
+        <div class="bonus-value">
+          <span class="value-label">Valor</span>
+          <span class="value-amount">€500–800</span>
+        </div>
+        <div class="bonus-why">Va más allá de la contabilidad básica — es inteligencia de negocio que normalmente se encarga aparte.</div>
+        <div class="card-number">01</div>
+      </div>
+      <div class="bonus-card">
+        <div class="included-badge"><div class="dot"></div>Incluido</div>
+        <div class="bonus-icon">💡</div>
+        <div class="bonus-title">Recomendaciones Estratégicas Trimestrales</div>
+        <div class="bonus-desc">No solo números — 2 o 3 acciones específicas cada trimestre basadas en las tendencias reales de tu negocio.</div>
+        <div class="bonus-value">
+          <span class="value-label">Valor</span>
+          <span class="value-amount">€200–400 / consulta</span>
+        </div>
+        <div class="bonus-why">Vas más allá de contabilidad hacia consultoría de negocio — sin pagar precio de consultor.</div>
+        <div class="card-number">02</div>
+      </div>
+      <div class="bonus-card">
+        <div class="included-badge"><div class="dot"></div>Incluido</div>
+        <div class="bonus-icon">👑</div>
+        <div class="bonus-title">Acceso Prioritario VIP</div>
+        <div class="bonus-desc">Respuesta en menos de 24h frente a las 48–72h del resto de clientes. Consultas directas por WhatsApp cuando lo necesitas.</div>
+        <div class="bonus-value">
+          <span class="value-label">Valor</span>
+          <span class="value-amount">Servicio premium</span>
+        </div>
+        <div class="bonus-why">Trato VIP que no todos reciben — porque los clientes a largo plazo merecen un acceso diferente.</div>
+        <div class="card-number">03</div>
+      </div>
+    </div>
+    <div class="bottom-strip">
+      <div class="strip-icon">🎁</div>
+      <div class="strip-text">
+        Estos bonus valen más de <strong>€500 por separado</strong>. Para ti están incluidos porque busco una relación a largo plazo, no solo hacer contabilidad.
+      </div>
+    </div>
+  </div>
+  <div>
+</div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Garantías · Cristina Montaner</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green:      #10B981;
+    --green-mid:  #6EE7B7;
+    --green-light:#6EE7B7;
+    --beige:      #F5F5DC;
+    --beige-dark: #E5E7EB;
+    --pink:       #FDF2F8;
+    --gray:       #9CA3AF;
+    --dark:       #374151;
+    --white:      #F9FAFB;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 50%, #E5E7EB 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+
+  .slide {
+    width: min(1280px, 100%);
+    min-height: 720px;
+    background: var(--white);
+    border-radius: 4px;
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    box-shadow: 0 8px 60px rgba(45,106,79,0.12);
+    position: relative;
+  }
+
+  .slide::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 220px; height: 220px;
+    background: radial-gradient(circle at top right, rgba(168,213,186,0.2) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .slide::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 180px; height: 180px;
+    background: radial-gradient(circle at bottom left, rgba(240,228,224,0.45) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* HEADER */
+  .header {
+    padding: 44px 64px 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--green-mid);
+    margin-bottom: 10px;
+  }
+
+  .title {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 300;
+    color: var(--dark);
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+
+  .title span { color: var(--green); font-weight: 600; }
+
+  .subtitle {
+    font-size: 13px;
+    color: var(--gray);
+    margin-top: 8px;
+    font-weight: 300;
+  }
+
+  .author {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green-mid);
+    font-weight: 500;
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, var(--green-light), transparent);
+    margin: 22px 64px 0;
+    opacity: 0.6;
+  }
+
+  /* MAIN */
+  .main {
+    padding: 32px 64px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* GRID — 3 columnas iguales */
+  .guarantees-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+
+  /* Card base */
+  .guarantee-card {
+    border-radius: 10px;
+    padding: 32px 28px 28px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .guarantee-card:nth-child(1) { animation-delay: 0.05s; }
+  .guarantee-card:nth-child(2) { animation-delay: 0.15s; }
+  .guarantee-card:nth-child(3) { animation-delay: 0.25s; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-green    { background: var(--green); }
+  .card-beige    { background: var(--beige-dark); }
+  .card-pink     { background: var(--pink); }
+
+  /* Círculo decorativo */
+  .guarantee-card::before {
+    content: '';
+    position: absolute;
+    top: -50px; right: -50px;
+    width: 150px; height: 150px;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .card-green::before  { background: rgba(168,213,186,0.12); }
+  .card-beige::before  { background: rgba(45,106,79,0.06); }
+  .card-pink::before   { background: rgba(45,106,79,0.05); }
+
+  /* Número grande decorativo */
+  .card-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 100px;
+    font-weight: 300;
+    line-height: 1;
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    opacity: 0.08;
+  }
+  .card-green .card-number  { color: white; }
+  .card-beige .card-number,
+  .card-pink .card-number   { color: var(--green); }
+
+  /* Icon */
+  .card-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 18px;
+  }
+  .card-green .card-icon { background: rgba(255,255,255,0.15); }
+  .card-beige .card-icon { background: rgba(45,106,79,0.1); }
+  .card-pink  .card-icon { background: rgba(45,106,79,0.08); }
+
+  /* Momento tag */
+  .card-moment {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 100px;
+    margin-bottom: 14px;
+    width: fit-content;
+  }
+  .card-moment .dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+  }
+  .card-green .card-moment  { background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.85); }
+  .card-green .card-moment .dot  { background: var(--green-light); }
+  .card-beige .card-moment  { background: rgba(45,106,79,0.1); color: var(--green-mid); }
+  .card-beige .card-moment .dot  { background: var(--green-mid); }
+  .card-pink  .card-moment  { background: rgba(45,106,79,0.08); color: var(--green-mid); }
+  .card-pink  .card-moment .dot  { background: var(--green-mid); }
+
+  /* Title */
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  .card-green .card-title  { color: white; }
+  .card-beige .card-title,
+  .card-pink  .card-title  { color: var(--dark); }
+
+  /* Guarantee statement — la promesa en grande */
+  .card-promise {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-style: italic;
+    line-height: 1.6;
+    margin-bottom: 16px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border-left: 3px solid;
+  }
+  .card-green .card-promise {
+    background: rgba(255,255,255,0.1);
+    border-color: var(--green-light);
+    color: rgba(255,255,255,0.9);
+  }
+  .card-beige .card-promise {
+    background: rgba(45,106,79,0.06);
+    border-color: var(--green-light);
+    color: var(--dark);
+  }
+  .card-pink .card-promise {
+    background: rgba(45,106,79,0.05);
+    border-color: var(--green-light);
+    color: var(--dark);
+  }
+
+  /* What fear it eliminates */
+  .card-fear {
+    margin-top: auto;
+  }
+  .card-fear-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .card-green .card-fear-label  { color: rgba(255,255,255,0.5); }
+  .card-beige .card-fear-label,
+  .card-pink  .card-fear-label  { color: var(--green-mid); }
+
+  .card-fear-text {
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 1.5;
+  }
+  .card-green .card-fear-text  { color: rgba(255,255,255,0.7); }
+  .card-beige .card-fear-text,
+  .card-pink  .card-fear-text  { color: var(--gray); }
+
+  /* BOTTOM STRIP */
+  .bottom-strip {
+    background: var(--beige-dark);
+    margin: 0 64px;
+    border-radius: 8px;
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .strip-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .strip-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .strip-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-style: italic;
+    color: var(--dark);
+    line-height: 1.5;
+  }
+
+  .strip-text strong {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--green);
+  }
+
+  .strip-condition {
+    font-size: 11px;
+    color: var(--gray);
+    font-weight: 300;
+    white-space: nowrap;
+    flex-shrink: 0;
+    border-left: 1px solid rgba(45,106,79,0.2);
+    padding-left: 20px;
+    line-height: 1.5;
+  }
+
+  .strip-condition strong {
+    display: block;
+    font-weight: 500;
+    color: var(--green-mid);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+
+  /* FOOTER */
+  .footer-line {
+    height: 1px;
+    background: linear-gradient(to right, var(--green-light), transparent);
+    margin: 16px 64px 0;
+    opacity: 0.4;
+  }
+
+  .footer {
+    padding: 14px 64px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-left {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green-light);
+    font-weight: 500;
+  }
+
+  .footer-right {
+    font-size: 10px;
+    color: var(--gray);
+    letter-spacing: 0.06em;
+  }
+
+  @media (max-width: 768px) {
+    body { padding: 16px 12px; }
+    .slide { width: 100%; min-height: unset; border-radius: 12px; grid-template-rows: auto auto 1fr auto; }
+    .header { padding: 32px 24px 0; flex-direction: column; gap: 8px; }
+    .title { font-size: 34px; }
+    .divider { margin: 16px 24px 0; }
+    .main { padding: 24px 24px 0; gap: 16px; }
+    .guarantees-grid { grid-template-columns: 1fr; gap: 12px; }
+    .guarantee-card { padding: 24px 20px 20px; }
+    .card-title { font-size: 22px; }
+    .card-promise { font-size: 13px; }
+    .bottom-strip { margin: 0; flex-direction: column; gap: 10px; padding: 14px 20px; }
+    .strip-text { font-size: 14px; }
+    .strip-condition { border-left: none; border-top: 1px solid rgba(45,106,79,0.2); padding-left: 0; padding-top: 12px; white-space: normal; }
+    .footer { padding: 12px 24px 20px; }
+  }
+
+</style>
+</head>
+<body>
+
+<div class="slide">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div>
+      <div class="title">Tu trabajo, <span>sin riesgo</span></div>
+      <div class="subtitle">Compromisos concretos que eliminan el miedo a contratar</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <div class="guarantees-grid">
+
+      <!-- GARANTÍA 1 — Resultado -->
+      <div class="guarantee-card card-green">
+        <div>
+          <div class="card-icon">🎯</div>
+          <div class="card-moment"><div class="dot"></div>Resultado final</div>
+          <div class="card-title">Garantía de resultado</div>
+          <div class="card-promise">
+            "Si al finalizar el primer cierre trimestral completo no tienes una imagen clara de tu situación financiera, seguimos trabajando sin coste adicional hasta que la tengas."
+          </div>
+        </div>
+        <div class="card-fear">
+          <div class="card-fear-label">Miedo que elimina</div>
+          <div class="card-fear-text">Pagar por un servicio que no cambia nada en la práctica.</div>
+        </div>
+        <div class="card-number">01</div>
+      </div>
+
+      <!-- GARANTÍA 2 — Acceso rápido -->
+      <div class="guarantee-card card-beige">
+        <div>
+          <div class="card-icon">⚡</div>
+          <div class="card-moment"><div class="dot"></div>Inicio del servicio</div>
+          <div class="card-title">Garantía de acceso rápido</div>
+          <div class="card-promise">
+            "En menos de 72 horas hábiles desde que me entregas la documentación, tienes acceso a tu contabilidad organizada en el software acordado."
+          </div>
+        </div>
+        <div class="card-fear">
+          <div class="card-fear-label">Miedo que elimina</div>
+          <div class="card-fear-text">Empezar a pagar y que pasen semanas sin ver ningún avance.</div>
+        </div>
+        <div class="card-number">02</div>
+      </div>
+
+      <!-- GARANTÍA 3 — Comunicación -->
+      <div class="guarantee-card card-pink">
+        <div>
+          <div class="card-icon">💬</div>
+          <div class="card-moment"><div class="dot"></div>Día a día</div>
+          <div class="card-title">Garantía de comunicación</div>
+          <div class="card-promise">
+            "Respuesta garantizada en menos de 24 horas hábiles a cualquier duda contable. No más esperar al gestor que solo aparece en época de impuestos."
+          </div>
+        </div>
+        <div class="card-fear">
+          <div class="card-fear-label">Miedo que elimina</div>
+          <div class="card-fear-text">Quedarse sin respuesta en momentos clave de decisión.</div>
+        </div>
+        <div class="card-number">03</div>
+      </div>
+
+    </div>
+
+    <!-- BOTTOM STRIP -->
+    <div class="bottom-strip">
+      <div class="strip-left">
+        <div class="strip-icon">📋</div>
+        <div class="strip-text">
+          Las garantías cubren el <strong>inicio, el día a día y el resultado final</strong> — los tres momentos donde el cliente más necesita confianza.
+        </div>
+      </div>
+      <div class="strip-condition">
+        <strong>Condición necesaria</strong>
+        El cliente debe entregar toda la documentación<br>contable del año en curso antes de iniciar el servicio.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div>
+</div>
+  </div>
+
+</div>
+
+</body>
+</html>

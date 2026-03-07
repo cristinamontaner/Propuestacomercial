@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿En Qué Cuadrante Estás? - Matriz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #10B981;
+            --light-green: #6EE7B7;
+            --beige: #F5F5DC;
+            --soft-gray: #9CA3AF;
+            --light-pink: #FDF2F8;
+            --neutral-800: #374151;
+            --neutral-600: #4B5563;
+            --warning-red: #EF4444;
+            --warning-orange: #F59E0B;
+            --gradient-bg: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 50%, #E5E7EB 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--gradient-bg);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            color: var(--neutral-800);
+            overflow-x: hidden;
+        }
+
+        .slide-container {
+            max-width: 1400px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid rgba(16, 185, 129, 0.1);
+            padding: 4rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .slide-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-green), var(--light-green));
+        }
+
+        .slide-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .slide-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--neutral-800), var(--soft-gray));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+        }
+
+        .slide-subtitle {
+            font-size: 1.125rem;
+            color: var(--soft-gray);
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+        }
+
+        .matrix-explanation {
+            text-align: center;
+            font-size: 1rem;
+            color: var(--neutral-600);
+            margin-bottom: 2.5rem;
+            font-style: italic;
+        }
+
+        .matrix-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .quadrant {
+            border-radius: 20px;
+            padding: 2.5rem;
+            position: relative;
+            transition: all 0.4s ease;
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 2px solid;
+        }
+
+        .quadrant:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Cuadrantes problemáticos */
+        .bad-quadrant {
+            border-color: #FCA5A5;
+            background: linear-gradient(135deg, #FEF2F2 0%, #FDF2F8 100%);
+        }
+
+        .bad-quadrant .quadrant-icon {
+            background: linear-gradient(135deg, var(--warning-red), #DC2626);
+            color: white;
+        }
+
+        /* Cuadrante bueno */
+        .good-quadrant {
+            border-color: var(--primary-green);
+            background: linear-gradient(135deg, #ECFDF5 0%, #F0FDF4 100%);
+            position: relative;
+        }
+
+        .good-quadrant::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: linear-gradient(135deg, var(--primary-green), var(--light-green));
+            border-radius: 23px;
+            z-index: -1;
+        }
+
+        .good-quadrant .quadrant-icon {
+            background: linear-gradient(135deg, var(--primary-green), var(--light-green));
+            color: white;
+        }
+
+        .quadrant-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .quadrant-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .quadrant-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--neutral-800);
+            line-height: 1.2;
+        }
+
+        .quadrant-content {
+            flex: 1;
+        }
+
+        .quadrant-problem {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--neutral-600);
+            margin-bottom: 1.5rem;
+        }
+
+        .quadrant-consequences {
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .consequence-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .consequence-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .consequence-icon {
+            margin-right: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .bad-quadrant .consequence-icon {
+            color: var(--warning-red);
+        }
+
+        .good-quadrant .consequence-icon {
+            color: var(--primary-green);
+        }
+
+        .quadrant-result {
+            text-align: center;
+            font-weight: 600;
+            padding: 0.75rem;
+            border-radius: 10px;
+            font-size: 0.95rem;
+        }
+
+        .bad-quadrant .quadrant-result {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--warning-red);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .good-quadrant .quadrant-result {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--primary-green);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .solution-badge {
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            background: linear-gradient(135deg, var(--primary-green), var(--light-green));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            }
+            50% {
+                box-shadow: 0 4px 20px rgba(16, 185, 129, 0.5);
+            }
+            100% {
+                box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            }
+        }
+
+        .matrix-conclusion {
+            text-align: center;
+            margin-top: 3rem;
+            background: var(--beige);
+            padding: 2rem;
+            border-radius: 16px;
+            border-left: 4px solid var(--primary-green);
+            animation: fadeInUp 1s ease-out 0.8s both;
+        }
+
+        .conclusion-text {
+            font-size: 1.125rem;
+            color: var(--neutral-800);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .conclusion-highlight {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.375rem;
+            font-weight: 600;
+            color: var(--primary-green);
+        }
+
+        /* Animaciones */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .matrix-container {
+                gap: 1.5rem;
+            }
+            
+            .quadrant {
+                padding: 2rem;
+                min-height: 250px;
+            }
+            
+            .slide-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .slide-container {
+                padding: 2rem;
+            }
+            
+            .matrix-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .quadrant {
+                min-height: 220px;
+                padding: 1.5rem;
+            }
+            
+            .slide-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <header class="slide-header">
+            <h1 class="slide-title">¿En Qué Cuadrante Estás?</h1>
+            <p class="slide-subtitle">Dónde están ahora vs. dónde pueden llegar</p>
+            <p class="matrix-explanation">3 cuadrantes problemáticos donde vive la mayoría → 1 cuadrante ideal donde yo te llevo</p>
+        </header>
+
+        <div class="matrix-container">
+            <!-- Cuadrante 1: Gestoría Básica -->
+            <div class="quadrant bad-quadrant">
+                <div class="quadrant-header">
+                    <div class="quadrant-icon">📋</div>
+                    <h3 class="quadrant-title">Solo Gestoría Básica</h3>
+                </div>
+                <div class="quadrant-content">
+                    <p class="quadrant-problem">
+                        La gestoría tradicional solo presenta impuestos. Sin acceso a los números, sin análisis útil para el negocio.
+                    </p>
+                    <div class="quadrant-consequences">
+                        <div class="consequence-item">
+                            <span class="consequence-icon">❌</span>
+                            <span>Contabilidad inaccesible</span>
+                        </div>
+                        <div class="consequence-item">
+                            <span class="consequence-icon">❌</span>
+                            <span>Decisiones a ciegas</span>
+                        </div>
+                        <div class="consequence-item">
+                            <span class="consequence-icon">❌</span>
+                            <span>Sin control de márgenes</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="quadrant-result">Crecimiento limitado y dudas constantes</div>
+            </div>
+
+            <!-- Cuadrante 2: Excel Propio -->
+            <div class="quadrant bad-quadrant">
+                <div class="quadrant-header">
+                    <div class="quadrant-icon">📊</div>
+                    <h3 class="quadrant-title">Excel Propio + Gestoría</h3>
+                </div>
+                <div class="quadrant-content">
+                    <p class="quadrant-problem">
+                        Intentas hacer tus propios análisis en Excel los fines de semana, pero sin tiempo ni conocimiento técnico adecuado.
+                    </p>
+                    <div class="quadrant-consequences">
+                        <div class="consequence-item">
+                            <span class="consequence-icon">⏰</span>
+                            <span>Fines de semana perdidos</span>
+                        </div>
+                        <div class="consequence-item">
+                            <span class="consequence-icon">❌</span>
+                            <span>Informes poco fiables</span>
+                        </div>
+                        <div class="consequence-item">
+                            <span class="consequence-icon">😰</span>
+                            <span>Estrés y frustración</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="quadrant-result">Trabajas más, pero sin claridad real</div>
+            </div>
+
+            <!-- Cuadrante 3: Sin Control Real -->
+            <div class="quadrant bad-quadrant">
+                <div class="quadrant-header">
+                    <div class="quadrant-icon">❓</div>
+                    <h3 class="quadrant-title">Sin Control Financiero</h3>
+                </div>
+                <div class="quadrant-content">
+                    <p class="quadrant-problem">
+                        Usas software contable moderno pero nadie te ayuda a interpretarlo. Los datos existen pero no los entiendes.
+                    </p>
+                    <div class="quadrant-consequences">
+                        <div class="consequence-item">
+                            <span class="consequence-icon">💸</span>
+                            <span>Proyectos poco rentables</span>
+                        </div>
+                        <div class="consequence-item">
+                            <span class="consequence-icon">❓</span>
+                            <span>Precios sin criterio</span>
+                        </div>
+                        <div class="consequence-item">
+                            <span class="consequence-icon">🚫</span>
+                            <span>Crecimiento bloqueado</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="quadrant-result">Oportunidades perdidas por incertidumbre</div>
+            </div>
+
+            <!-- Cuadrante 4: Solución Ideal -->
+            <div class="quadrant good-quadrant">
+                <div class="solution-badge">Tu Destino</div>
+                <div class="quadrant-header">
+                    <div class="quadrant-icon">🎯</div>
+                    <h3 class="quadrant-title">Contabilidad Estratégica</h3>
+                </div>
+                <div class="quadrant-content">
+                    <p class="quadrant-problem">
+                        Contabilidad completa + análisis útil + tiempo liberado. El punto intermedio profesional que necesitas.
+                    </p>
+                    <div class="quadrant-consequences">
+                        <div class="consequence-item">
+                            <span class="consequence-icon">✅</span>
+                            <span>Números claros y accesibles</span>
+                        </div>
+                        <div class="consequence-item">
+                            <span class="consequence-icon">✅</span>
+                            <span>Decisiones basadas en datos</span>
+                        </div>
+                        <div class="consequence-item">
+                            <span class="consequence-icon">✅</span>
+                            <span>Tiempo liberado para tu negocio</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="quadrant-result">Crecimiento con control y confianza</div>
+            </div>
+        </div>
+
+        <div class="matrix-conclusion">
+            <p class="conclusion-text">
+                El 80% de estudios técnicos y profesionales IT están atrapados en los primeros 3 cuadrantes. 
+                Yo te llevo directamente al cuarto: donde tienes el control sin el estrés.
+            </p>
+            <p class="conclusion-highlight">
+                No necesitas un CFO completo. Necesitas el punto intermedio estratégico.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
