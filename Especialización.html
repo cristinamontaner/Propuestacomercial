@@ -96,5 +96,39 @@
             <span class="conclusion-highlight">El mismo nivel profesional que una gran corporación, al alcance de tu estudio.</span>
         </div>
     </div>
+
+<!-- ═══ BOTÓN SIGUIENTE ═══ -->
+<div id="next-btn-wrap" style="position:fixed;bottom:2rem;right:2rem;z-index:9999;">
+    <button id="next-btn" onclick="goNext()" style="background:linear-gradient(135deg,#10B981,#059669);color:white;border:none;cursor:pointer;padding:0.9rem 1.75rem;border-radius:50px;font-family:'Inter',sans-serif;font-size:0.9rem;font-weight:500;box-shadow:0 4px 20px rgba(16,185,129,0.35);transition:transform 0.2s,box-shadow 0.2s;display:flex;align-items:center;gap:0.5rem;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 28px rgba(16,185,129,0.45)'" onmouseout="this.style.transform='';this.style.boxShadow='0 4px 20px rgba(16,185,129,0.35)'">
+        <span id="next-label">Siguiente</span><span>→</span>
+    </button>
+    <a href="indice.html" style="display:block;text-align:center;margin-top:0.5rem;font-size:0.72rem;color:#9CA3AF;text-decoration:none;font-family:'Inter',sans-serif;">← Volver al índice</a>
+</div>
+<script>
+const SLIDE_INDEX = 16;
+const SLIDES_FILES = [
+    'ElMejorMomentoesAhora.html','Antecedentes.html','SituaciónActualdelaMayoría.html',
+    'slide_situacion_beneficios.html','ROI.html','Método.html','Cronograma.html',
+    'ActividadesyEntregables.html','Ilustrativos.html','NoPasarás.html','QuickWin.html',
+    'EsfuerzodelCliente.html','slide_precio.html','Porquéyo.html','Mihistoria.html',
+    'Valores.html','Especialización.html','Extras.html','Bonus.html',
+    'Garantías.html','slide_precio_bonus.html','FAQS.html','Firma.html'
+];
+const TOTAL = SLIDES_FILES.length;
+const isLast = SLIDE_INDEX === TOTAL - 1;
+if (isLast) document.getElementById('next-label').textContent = 'Finalizar propuesta';
+sessionStorage.setItem('unlocked', Math.max(parseInt(sessionStorage.getItem('unlocked') || 0), SLIDE_INDEX));
+if (isLast) sessionStorage.setItem('completed', '1');
+function goNext() {{
+    if (isLast) {{
+        sessionStorage.setItem('completed', '1');
+        window.location.href = 'indice.html';
+    }} else {{
+        sessionStorage.setItem('unlocked', Math.max(parseInt(sessionStorage.getItem('unlocked') || 0), SLIDE_INDEX + 1));
+        window.location.href = SLIDES_FILES[SLIDE_INDEX + 1];
+    }}
+}}
+</script>
+
 </body>
 </html>

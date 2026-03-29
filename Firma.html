@@ -183,8 +183,8 @@ input.err{border-color:#EF4444}
 <script>
 // --- Email inyectado por JS para evitar filtros ---
 (function(){
-  var u='cristina.proasistente';
-  var d='gmail.com';
+  var u='hola';
+  var d='cristinamontaner.com';
   var e=u+'@'+d;
   document.getElementById('em').textContent=e;
   document.getElementById('nota').textContent='El PDF se descargará automáticamente · Fírmalo y envíalo a '+e;
@@ -350,5 +350,17 @@ function generarPDF(){
   document.getElementById('ok').style.display='block';
 }
 </script>
+
+<!-- ═══ BOTÓN FINALIZAR ═══ -->
+<div id="next-btn-wrap" style="position:fixed;bottom:2rem;right:2rem;z-index:9999;">
+    <button onclick="window.location.href='indice.html'" style="background:linear-gradient(135deg,#10B981,#059669);color:white;border:none;cursor:pointer;padding:0.9rem 1.75rem;border-radius:50px;font-family:'Inter',sans-serif;font-size:0.9rem;font-weight:500;box-shadow:0 4px 20px rgba(16,185,129,0.35);display:flex;align-items:center;gap:0.5rem;">
+        <span>Finalizar propuesta · Volver al índice</span><span>→</span>
+    </button>
+</div>
+<script>
+sessionStorage.setItem('unlocked', 22);
+sessionStorage.setItem('completed', '1');
+</script>
+
 </body>
 </html>
